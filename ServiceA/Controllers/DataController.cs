@@ -14,15 +14,20 @@ namespace ServiceA.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<object> Get()
+        public async Task<IActionResult> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new
-            {
-                Service = "ServiceA",
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                Value = index.ToString()
-            })
-            .ToArray();
+            var headers = HttpContext.Request.Headers
+                   .ToDictionary(h => h.Key, h => h.Value.ToString());
+
+            return Ok(headers);
+
+            //return Enumerable.Range(1, 5).Select(index => new
+            //{
+            //    Service = "ServiceA",
+            //    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            //    Value = index.ToString()
+            //})
+            //.ToArray();
         }
     }
 }

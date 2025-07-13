@@ -16,8 +16,17 @@ namespace FrontendService.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var headers = HttpContext.Request.Headers
+                   .ToDictionary(h => h.Key, h => h.Value.ToString());
+
+            return Ok(headers);
+        }
+
         [HttpGet("getfrontend")]
-        public IEnumerable<object> Get()
+        public IEnumerable<object> GetFront()
         {
             return Enumerable.Range(1, 5).Select(index => new 
             {
